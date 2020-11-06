@@ -1,0 +1,37 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      <ion-row justify-content-center align-items-center>
+        <img src="../../assets/logo.png" alt="logo" class="logo" />
+      </ion-row>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card>
+    <img src="/assets/special.jpeg" alt="mackInova" />
+    <ion-card-header>
+      <ion-card-subtitle>Evento Especial</ion-card-subtitle>
+      <ion-card-title>Mack Inova</ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content>
+      Acompanhe as novidades do evento.
+      <ion-card class="card-list">
+        <div
+          class="card-item"
+          *ngFor="let event of events"
+          (click)="eventOpen(event.Id)"
+        >
+          <img [src]="event.imagePath" alt="event.Title" />
+          <div class="card-header">
+            <p class="info">{{ event.Title }}</p>
+            <p class="date">{{ event.Date | date: "dd/MM" }}</p>
+          </div>
+        </div>
+      </ion-card>
+      <!-- <div style="height: 30vh;" id="map_canvas" padding></div> -->
+    </ion-card-content>
+  </ion-card>
+</ion-content>

@@ -1,0 +1,73 @@
+<app-settings-menu></app-settings-menu>
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="end">
+      <ion-button (click)="openMenu()">
+        <ion-icon size="large" name="menu"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<section class="profile">
+  <div class="user" text-center>
+    <img src="../../assets/img/profile.png" alt="profile" />
+    <h5>{{ profileName }}</h5>
+  </div>
+</section>
+
+<ion-content id="content">
+  <ion-refresher slot="fixed" (ionRefresh)="loadEvents($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  <ion-card class="card-segment" text-center>
+    <p>Eventos Interessados</p>
+    <ion-segment mode="md" [(ngModel)]="slide">
+      <ion-segment-button mode="md" value="0" (click)="selectedTab(0)">
+        <ion-label> Futuros</ion-label>
+      </ion-segment-button>
+      <ion-segment-button mode="md" value="1" (click)="selectedTab(1)">
+        <ion-label> Passados</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+  </ion-card>
+  <ion-slides #slider (ionSlideDidChange)="moveButton()">
+    <ion-slide>
+      <ion-card class="card-list">
+        <ion-item text-center *ngIf="futureEvents.length < 1">
+          <ion-label>Nenhum evento futuro</ion-label>
+        </ion-item>
+
+        <div
+          class="card-item"
+          *ngFor="let event of futureEvents"
+          (click)="eventOpen(event.Id)"
+        >
+          <img [src]="event.imagePath" [alt]="event.Title" />
+          <div class="card-header">
+            <p class="info">{{ event.Title }}</p>
+            <p class="date">{{ event.Date | date: "dd/MM" }}</p>
+          </div>
+        </div>
+      </ion-card>
+    </ion-slide>
+
+    <ion-slide>
+      <ion-card class="card-list">
+        <ion-item text-center *ngIf="futureEvents.length < 1">
+          <ion-label>Nenhum evento passado</ion-label>
+        </ion-item>
+        <div
+          class="card-item"
+          *ngFor="let event of pastEvents"
+          (click)="eventOpen(event.Id)"
+        >
+          <img [src]="event.imagePath" alt="a" />
+          <div class="card-header">
+            <p class="info">{{ event.Title }}</p>
+            <p class="date">{{ event.Date | date: "dd/MM" }}</p>
+          </div>
+        </div>
+      </ion-card>
+    </ion-slide>
+  </ion-slides>
+</ion-content>

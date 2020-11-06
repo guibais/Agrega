@@ -1,0 +1,198 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      <ion-row justify-content-center align-items-center>
+        <img src="../../assets/logo.png" alt="logo" class="logo" />
+      </ion-row>
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="addEvent()">
+        <ion-icon name="add" size="large"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+  <ion-segment mode="md" [(ngModel)]="slide">
+    <ion-segment-button value="0" mode="md" (click)="selectedTab(0)">
+      <ion-label>Para Você</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="1" mode="md" (click)="selectedTab(1)">
+      <ion-label>Descubra</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+  <p class="locate">
+    <ion-icon name="pin" color="black"></ion-icon> {{ Address }}
+  </p>
+</ion-header>
+
+<ion-content>
+  <ion-slides #slider (ionSlideDidChange)="moveButton()">
+    <ion-slide>
+      <div class="container" padding>
+        <section
+          class="event"
+          *ngFor="let event of events"
+          (click)="eventOpen(event.Id)"
+        >
+          <img [src]="event.imagePath" />
+          <div class="event__card">
+            <div class="info-row">
+              <div class="tag">
+                <span>{{ event.Category | titlecase }}</span>
+              </div>
+              <!-- <div class="stars">
+                <ion-icon
+                  color="primary"
+                  src="../../assets/app-icons/star.svg"
+                ></ion-icon>
+                <ion-icon src="../../assets/app-icons/star.svg"></ion-icon>
+                <ion-icon src="../../assets/app-icons/star.svg"></ion-icon>
+                <ion-icon src="../../assets/app-icons/star.svg"></ion-icon>
+                <ion-icon src="../../assets/app-icons/star.svg"></ion-icon>
+              </div> -->
+              <!-- <div class="rating">2.5 mil</div> -->
+              <div class="date" *ngIf="checkDate(event.Date) == event.Date">
+                {{ event.Date | date: "dd/MM" }}
+              </div>
+              <div class="date" *ngIf="checkDate(event.Date) != event.Date">
+                {{ checkDate(event.Date) }}
+              </div>
+            </div>
+
+            <div class="event__title">{{ event.Title }}</div>
+            <div class="event__body">
+              <div class="event__body--location">
+                <ion-icon
+                  src="../../assets/app-icons/navigation-map.svg"
+                ></ion-icon>
+                <span class="event__body--detail">{{ event.Address }}</span>
+              </div>
+              <div class="event__body--date">
+                <ion-icon name="calendar"></ion-icon>
+                <span
+                  class="event__body--detail"
+                  *ngIf="event.Time && event.finalTime"
+                >
+                  Das {{ event.Time }} até
+                  {{ event.finalTime }}
+                </span>
+                <span
+                  class="event__body--detail"
+                  *ngIf="!event.Time || !event.finalTime"
+                >
+                  O Dia Todo
+                </span>
+              </div>
+            </div>
+          </div>
+        </section>
+        <section
+          class="event fakeItem"
+          *ngIf="!events"
+          (click)="eventOpen(event.Id)"
+        >
+          <div style="width: 90vw;height: 30vh;border-radius: 0.3rem;"></div>
+          <div class="event__card">
+            <div class="info-row">
+              <div class="tag">
+                <span></span>
+              </div>
+              <!-- <div class="stars">
+                        <ion-icon
+                          color="primary"
+                          src="../../assets/app-icons/star.svg"
+                        ></ion-icon>
+                        <ion-icon src="../../assets/app-icons/star.svg"></ion-icon>
+                        <ion-icon src="../../assets/app-icons/star.svg"></ion-icon>
+                        <ion-icon src="../../assets/app-icons/star.svg"></ion-icon>
+                        <ion-icon src="../../assets/app-icons/star.svg"></ion-icon>
+                      </div> -->
+              <!-- <div class="rating">2.5 mil</div> -->
+              <div class="date"></div>
+            </div>
+
+            <div class="event__title"></div>
+            <div class="event__body">
+              <div class="event__body--location">
+                <ion-icon
+                  src="../../assets/app-icons/navigation-map.svg"
+                ></ion-icon>
+                <span class="event__body--detail"></span>
+              </div>
+              <div class="event__body--date">
+                <ion-icon name="calendar"></ion-icon>
+                <span class="event__body--detail"></span>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </ion-slide>
+    <ion-slide>
+      <h3 (click)="loadNearbyEvents()" *ngIf="!nearEvents && Address == ''">
+        Localização não encontrada. Clique aqui para tentar novamente.
+      </h3>
+      <div class="container" padding *ngIf="nearEvents">
+        <ion-item text-center margin-bottom>
+          <p style="width: 100%;">Eventos Próximos a Você!</p>
+        </ion-item>
+        <section
+          class="event"
+          *ngFor="let event of nearEvents"
+          (click)="eventOpen(event.Id)"
+        >
+          <img [src]="event.imagePath" />
+          <div class="event__card">
+            <div class="info-row">
+              <div class="tag">
+                <span>{{ event.Category }}</span>
+              </div>
+              <!-- <div class="stars">
+                        <ion-icon
+                          color="primary"
+                          src="../../assets/app-icons/star.svg"
+                        ></ion-icon>
+                        <ion-icon src="../../assets/app-icons/star.svg"></ion-icon>
+                        <ion-icon src="../../assets/app-icons/star.svg"></ion-icon>
+                        <ion-icon src="../../assets/app-icons/star.svg"></ion-icon>
+                        <ion-icon src="../../assets/app-icons/star.svg"></ion-icon>
+                      </div> -->
+              <!-- <div class="rating">2.5 mil</div> -->
+              <div class="date" *ngIf="checkDate(event.Date) == event.Date">
+                {{ event.Date | date: "short" }}
+              </div>
+              <div class="date" *ngIf="checkDate(event.Date) != event.Date">
+                {{ checkDate(event.Date) }}
+              </div>
+            </div>
+
+            <div class="event__title">{{ event.Title }}</div>
+            <div class="event__body">
+              <div class="event__body--location">
+                <ion-icon
+                  src="../../assets/app-icons/navigation-map.svg"
+                ></ion-icon>
+                <span class="event__body--detail">{{ event.Address }}</span>
+              </div>
+              <div class="event__body--date">
+                <ion-icon name="calendar"></ion-icon>
+                <span
+                  class="event__body--detail"
+                  *ngIf="event.Time && event.finalTime"
+                >
+                  Das {{ event.Time }} até
+                  {{ event.finalTime }}
+                </span>
+                <span
+                  class="event__body--detail"
+                  *ngIf="!event.Time || !event.finalTime"
+                >
+                  O Dia Todo
+                </span>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </ion-slide>
+  </ion-slides>
+</ion-content>

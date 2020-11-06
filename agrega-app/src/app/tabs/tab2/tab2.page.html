@@ -1,0 +1,72 @@
+<ion-header>
+  <ion-toolbar [ngClass]="{ focus: isFocused }">
+    <!-- <ion-icon name="search"></ion-icon><span class="search-text">Pesquisar...</span> -->
+    <ion-searchbar
+      animated
+      showCancelButton
+      cancelButtonText="Cancelar"
+      placeholder="Procurar Evento"
+      (ionFocus)="onFocus()"
+      (ionCancel)="offFocus()"
+      (ionChange)="searchEvents()"
+      [ngClass]="{ focus: isFocused }"
+      [(ngModel)]="searchInput"
+    ></ion-searchbar>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid text-center>
+    <ion-row>
+      <ion-col *ngIf="isFocused" class="no-padding">
+        <ion-list>
+          <ion-label text-wrap *ngIf="!searchResult">
+            <h2>
+              Digite para pesquisar um evento, por Título, Data ou Categoria
+            </h2>
+          </ion-label>
+          <ion-item
+            class="ion-activatable"
+            *ngFor="let event of searchResult"
+            (click)="eventOpen(event.objectID)"
+          >
+            <ion-ripple-effect></ion-ripple-effect>
+            <ion-thumbnail slot="start">
+              <img [src]="event.imagePath" />
+            </ion-thumbnail>
+            <ion-label text-wrap>
+              <h2>{{ event.Title }}</h2>
+              <h3>
+                <span>{{ event.Category | titlecase }}</span>
+              </h3>
+              <p>{{ event.Date | date: "dd/MM" }}</p>
+            </ion-label>
+          </ion-item>
+        </ion-list>
+      </ion-col>
+      <ion-col *ngIf="!isFocused">
+        <ion-virtual-scroll [items]="cards">
+          <div *virtualItem="let card">
+            <ion-ripple-effect></ion-ripple-effect>
+            <ion-card
+              (click)="openCategory(card.nome)"
+              class="cards"
+              [ngStyle]="{
+                background:
+                  'linear-gradient(180deg,' +
+                  card.cor1 +
+                  ', ' +
+                  card.cor2 +
+                  '), url(' +
+                  card.url +
+                  ') center center'
+              }"
+            >
+              <h2>{{ card.nome }}</h2>
+            </ion-card>
+          </div>
+        </ion-virtual-scroll>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

@@ -1,0 +1,19 @@
+ion-searchbar.sc-ion-searchbar-md-h {
+  --background: none;
+  --color: #fff;
+  --icon-color: #fff;
+
+  &.focus {
+    --background: #fff;
+    --color: #000;
+    --icon-color: #000;
+  }
+}
+ion-toolbar.focus {
+  --background: #fff;
+}
+
+.header-ios ion-toolbar {
+  --ion-toolbar-background: #fff !important;
+  --ion-toolbar-color: #000 !important;
+}

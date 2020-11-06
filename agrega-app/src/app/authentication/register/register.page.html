@@ -1,0 +1,75 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Registrar</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="home" (click)="dismiss()"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <form [formGroup]="registerForm" class="main-form">
+    <ion-item>
+      <ion-label position="stacked">Nome</ion-label>
+      <ion-input formControlName="name"></ion-input>
+    </ion-item>
+    <div class="validator-error" *ngIf="submitted && f.name.errors">
+      <p *ngIf="f.name.errors.required">Por favor, digite seu nome</p>
+    </div>
+    <ion-item>
+      <ion-label position="stacked">CPF</ion-label>
+      <ion-input formControlName="cpf"></ion-input>
+    </ion-item>
+    <div class="validator-error" *ngIf="submitted && f.cpf.errors">
+      <p *ngIf="f.cpf.errors.required">Por favor, digite seu cpf</p>
+    </div>
+    <!-- <ion-item>
+      <ion-label>Sexo</ion-label>
+      <ion-select placeholder="Selecione" formControlName="gender">
+        <ion-select-option value="f">Feminino</ion-select-option>
+        <ion-select-option value="m">Masculino</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <div class="validator-error" *ngIf="submitted && f.gender.errors">
+      <p *ngIf="f.gender.errors.required">Usaremos seu sexo para recomendações de eventos</p>
+    </div> -->
+    <ion-item>
+      <ion-label position="stacked" type="email">Email</ion-label>
+      <ion-input formControlName="email" type="email"></ion-input>
+    </ion-item>
+    <div class="validator-error" *ngIf="submitted && f.email.errors">
+      <p *ngIf="f.email.errors.required">Digite seu email</p>
+    </div>
+    <!-- <ion-item>
+      <ion-label>Data de Nascimento</ion-label>
+      <ion-datetime
+        display-format="DD/MM/YYYY"
+        picker-format="DD MMMM YYYY"
+        formControlName="age"
+      ></ion-datetime>
+    </ion-item>
+
+    <div class="validator-error" *ngIf="submitted && f.age.errors">
+      <p *ngIf="f.age.errors.required">Usaremos sua idade para recomendações de eventos</p>
+    </div> -->
+    <ion-item>
+      <ion-label position="stacked">Senha</ion-label>
+      <ion-input formControlName="pass" type="password"></ion-input>
+    </ion-item>
+    <div class="validator-error" *ngIf="submitted && f.pass.errors">
+      <p *ngIf="f.pass.errors.required">Por favor, digite uma senha</p>
+    </div>
+    <ion-item>
+      <ion-label position="stacked">Confirmar Senha</ion-label>
+      <ion-input formControlName="verifyPass" type="password"></ion-input>
+    </ion-item>
+    <div class="validator-error" *ngIf="f.pass.value != f.verifyPass.value">
+      <p>As senhas não coincidem</p>
+    </div>
+    <div class="main-btn">
+      <ion-button type="submit" expand="full" (click)="onSubmit()"
+        >Cadastrar</ion-button
+      >
+    </div>
+  </form>
+</ion-content>

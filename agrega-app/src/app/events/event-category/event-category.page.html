@@ -1,0 +1,70 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>{{ category | titlecase }}</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref=""></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="loadEvents($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  <p *ngIf="events && events.length < 1">
+    Nenhum evento criado para essa categoria
+  </p>
+  <div class="container">
+    <ion-spinner *ngIf="!events"></ion-spinner>
+    <section
+      class="event"
+      [ngClass]="dateNow > event.finalDate ? 'ended' : ''"
+      *ngFor="let event of events"
+      (click)="eventOpen(event.Id)"
+    >
+      <img [src]="event.imagePath" />
+      <div class="finished" *ngIf="dateNow > event.finalDate">
+        <h1>Evento Encerrado</h1>
+        <small
+          >Fique atento para não <br />
+          perder novas oportunidades</small
+        >
+      </div>
+      <div class="event__card">
+        <div class="info-row">
+          <div class="tag">
+            <span>{{ event.Category | titlecase }}</span>
+          </div>
+          <!-- <div class="stars">
+            <ion-icon
+              color="primary"
+              src="../../assets/app-icons/star.svg"
+            ></ion-icon>
+            <ion-icon src="../../assets/app-icons/star.svg"></ion-icon>
+            <ion-icon src="../../assets/app-icons/star.svg"></ion-icon>
+            <ion-icon src="../../assets/app-icons/star.svg"></ion-icon>
+            <ion-icon src="../../assets/app-icons/star.svg"></ion-icon>
+          </div> -->
+          <!-- <div class="rating">2.5 mil</div> -->
+          <div class="date">
+            {{ event.Date | date: "dd/MM" }}
+          </div>
+        </div>
+
+        <div class="event__title">{{ event.Title }}</div>
+        <div class="event__body">
+          <div class="event__body--location">
+            <ion-icon
+              src="../../assets/app-icons/navigation-map.svg"
+            ></ion-icon>
+            <span class="event__body--detail">{{ event.Address }}</span>
+          </div>
+          <div class="event__body--tickets">
+            <ion-icon src="../../assets/app-icons/ticket.svg"></ion-icon>
+            <span class="event__body--detail">0 Comparecerão</span>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</ion-content>

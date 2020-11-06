@@ -1,0 +1,24 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref=""></ion-back-button>
+    </ion-buttons>
+    <ion-title>Imagem do Evento</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="addEvent()">
+        Avançar
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <div class="img">
+    <img src="{{ imageSrc }}" alt="ImageToUpload" />
+    <div class="main-btn">
+      <ion-button type="submit" expand="full" (click)="changeImage()"
+        >Mudar Imagem</ion-button
+      >
+    </div>
+  </div>
+</ion-content>

@@ -1,0 +1,39 @@
+ion-card {
+  img {
+    height: 30vh;
+  }
+}
+.card-list {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.card-item {
+  margin-top: 0;
+  border-bottom: 1px solid #d4d4d4;
+  display: flex;
+  &:last-child {
+    border-bottom: none;
+  }
+
+  img {
+    text-align: center;
+    width: 3rem;
+    height: 2rem;
+    margin: 0.5rem;
+  }
+
+  .card-header {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    p {
+      margin: auto 0;
+      font-size: 0.7rem;
+      margin-right: 1rem;
+    }
+    .info {
+      color: #000;
+    }
+  }
+}

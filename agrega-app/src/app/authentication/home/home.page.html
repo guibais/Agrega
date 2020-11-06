@@ -1,0 +1,40 @@
+<ion-content>
+  <ion-grid>
+    <ion-row padding>
+      <ion-col text-center>
+        <img src="../../assets/logo.png" alt="agrega" class="agrega-img" />
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="12">
+        <ion-button
+          margin-top
+          expand="block"
+          (click)="loginFacebook()"
+          class="btn-face"
+          >Entrar com facebook</ion-button
+        >
+      </ion-col>
+      <ion-col>
+        <ion-button
+          margin-top
+          color="light"
+          expand="block"
+          fill="outline"
+          (click)="openLogin()"
+          >Login</ion-button
+        >
+      </ion-col>
+      <ion-col>
+        <ion-button
+          margin-top
+          color="light"
+          expand="block"
+          fill="outline"
+          (click)="openRegister()"
+          >Registrar</ion-button
+        >
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

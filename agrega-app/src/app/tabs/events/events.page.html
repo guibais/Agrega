@@ -1,0 +1,65 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Meus Eventos</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-refresher slot="fixed" (ionRefresh)="loadEvents($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  <ion-list>
+    <ion-item *ngIf="events.length < 1">
+      <p>Você ainda não criou nenhum evento</p>
+    </ion-item>
+    <ion-item
+      class="ion-activatable"
+      *ngFor="let event of events"
+      (click)="eventOpen(event.Id)"
+    >
+      <ion-ripple-effect></ion-ripple-effect>
+      <ion-thumbnail slot="start">
+        <img [src]="event.imagePath" />
+      </ion-thumbnail>
+      <ion-label text-wrap>
+        <h2>{{ event.Title }}</h2>
+        <h3>
+          <span>{{ event.Category | titlecase }}</span>
+        </h3>
+        <p *ngIf="event.Time && event.finalTime">
+          {{ event.Date | date: "dd/MM" }} - Das {{ event.Time }} até
+          {{ event.finalTime }}
+        </p>
+        <p *ngIf="!event.Time || !event.finalTime">
+          {{ event.Date | date: "dd/MM" }} - O Dia Todo
+        </p>
+      </ion-label>
+    </ion-item>
+    <div *ngIf="!events">
+      <ion-item class="ion-activatable" *ngFor="let number of [0, 1, 2, 4]">
+        <ion-thumbnail slot="start">
+          <ion-skeleton-text
+            width="50px"
+            style="line-height: 3rem"
+          ></ion-skeleton-text>
+        </ion-thumbnail>
+        <ion-label>
+          <h2>
+            <ion-skeleton-text
+              width="80px"
+              style="line-height: 1.5rem"
+            ></ion-skeleton-text>
+          </h2>
+          <h3>
+            <span>
+              <ion-skeleton-text width="30px"></ion-skeleton-text>
+            </span>
+          </h3>
+          <p>
+            <ion-skeleton-text width="100px"></ion-skeleton-text>
+          </p>
+        </ion-label>
+      </ion-item>
+    </div>
+  </ion-list>
+</ion-content>

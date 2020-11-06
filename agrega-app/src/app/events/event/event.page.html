@@ -1,0 +1,120 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref=""></ion-back-button>
+    </ion-buttons>
+    <ion-title>Informações</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="presentActionSheet()">
+        <ion-icon name="more"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="loadEvent($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  <ion-spinner *ngIf="!event"></ion-spinner>
+  <img [src]="event.imagePath" *ngIf="event" />
+  <div class="container" *ngIf="event">
+    <section class="event">
+      <div class="event__card">
+        <div class="info-row">
+          <div class="tag">
+            <span>{{ event.Category }}</span>
+          </div>
+          <!-- <div class="stars">
+            <ion-icon
+              color="primary"
+              src="../../assets/app-icons/star.svg"
+            ></ion-icon>
+            <ion-icon src="../../assets/app-icons/star.svg"></ion-icon>
+            <ion-icon src="../../assets/app-icons/star.svg"></ion-icon>
+            <ion-icon src="../../assets/app-icons/star.svg"></ion-icon>
+            <ion-icon src="../../assets/app-icons/star.svg"></ion-icon>
+          </div> -->
+          <!-- <div class="rating">2.5 mil</div> -->
+          <div class="date" *ngIf="event.Date != event.finalDate">
+            {{ event.Date | date: "dd/MM" }} até
+            {{ event.finalDate | date: "dd/MM" }}
+          </div>
+          <div class="date" *ngIf="event.Date == event.finalDate">
+            {{ event.Date | date: "dd/MM" }}
+          </div>
+        </div>
+
+        <div class="event__title">{{ event.Title }}</div>
+        <div class="event__subtitle" *ngIf="event.Subtitle">
+          {{ event.Subtitle }}
+        </div>
+        <div class="event__body">
+          <div class="event__body--location">
+            <ion-icon
+              src="../../assets/app-icons/navigation-map.svg"
+            ></ion-icon>
+            <a
+              class="event__body--detail"
+              href="http://maps.google.com/?q={{ event.Address }}"
+              >{{ event.Address }} <br />
+              {{ event.Complement }}
+            </a>
+          </div>
+          <div class="event__body--time">
+            <ion-icon name="calendar"></ion-icon>
+            <span
+              class="event__body--detail"
+              *ngIf="event.Time && event.finalTime"
+            >
+              Das {{ event.Time }} até
+              {{ event.finalTime }}
+            </span>
+            <span
+              class="event__body--detail"
+              *ngIf="!event.Time || !event.finalTime"
+            >
+              O Dia Todo
+            </span>
+          </div>
+          <div class="event__body--tickets">
+            <ion-icon src="../../assets/app-icons/ticket.svg"></ion-icon>
+            <span class="event__body--detail"
+              >{{
+                InterestedUsers === 1
+                  ? "1 Interessado"
+                  : InterestedUsers + " Interessados"
+              }}
+            </span>
+          </div>
+        </div>
+
+        <div
+          class="event__description"
+          [innerHTML]="event.Description"
+          *ngIf="event.Description"
+        ></div>
+        <div class="main-rounded-btn">
+          <ion-button
+            expand="round"
+            (click)="presentAlertDocument()"
+            *ngIf="!isInterested && !isPastEvent"
+            >{{
+              event.hasId ? "Inscrever-se no evento" : "Tenho Interesse!"
+            }}</ion-button
+          >
+          <ion-button
+            expand="round"
+            (click)="presentAlertDocument()"
+            *ngIf="isInterested && !isPastEvent"
+            color="light"
+            >Adicionado aos interesses!</ion-button
+          >
+          <ion-button expand="round" *ngIf="isPastEvent" color="light" disabled
+            >Evento finalizado!</ion-button
+          >
+        </div>
+      </div>
+    </section>
+  </div>
+</ion-content>

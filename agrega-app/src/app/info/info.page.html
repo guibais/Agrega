@@ -1,0 +1,55 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Informações</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="onSubmit()">
+        <ion-icon name="checkmark" size="large"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <form [formGroup]="infoForm" class="main-form">
+    <ion-item>
+      <ion-label position="stacked">Nome</ion-label>
+      <ion-input formControlName="name"></ion-input>
+    </ion-item>
+    <div class="validator-error" *ngIf="submitted && f.name.errors">
+      <p *ngIf="f.name.errors.required">Por favor, digite seu nome</p>
+    </div>
+    <ion-item>
+      <ion-label position="stacked">CPF</ion-label>
+      <ion-input formControlName="cpf"></ion-input>
+    </ion-item>
+    <div class="validator-error" *ngIf="submitted && f.cpf.errors">
+      <p *ngIf="f.cpf.errors.required">Por favor, digite seu cpf</p>
+    </div>
+    <!-- <ion-item>
+      <ion-label>Sexo</ion-label>
+      <ion-select placeholder="Selecione" formControlName="gender">
+        <ion-select-option value="f">Feminino</ion-select-option>
+        <ion-select-option value="m">Masculino</ion-select-option>
+      </ion-select>
+    </ion-item> -->
+    <!-- <div class="validator-error" *ngIf="submitted && f.gender.errors">
+      <p *ngIf="f.gender.errors.required">Usaremos seu sexo para recomendações de eventos</p>
+    </div>
+    <ion-item>
+      <ion-label>Data de Nascimento</ion-label>
+      <ion-datetime
+        display-format="DD/MM/YYYY"
+        picker-format="DD MMMM YYYY"
+        formControlName="age"
+      ></ion-datetime>
+    </ion-item>
+    <div class="validator-error" *ngIf="submitted && f.age.errors">
+      <p *ngIf="f.age.errors.required">Usaremos sua idade para recomendações de eventos</p>
+    </div> -->
+    <div class="main-btn">
+      <ion-button type="submit" expand="full" (click)="onSubmit()"
+        >Salvar</ion-button
+      >
+    </div>
+  </form>
+</ion-content>

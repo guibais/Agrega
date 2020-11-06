@@ -1,0 +1,31 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="home" (click)="dismiss()"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Esqueci Minha Senha</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <form [formGroup]="forgotForm" class="main-form">
+          <ion-item>
+            <ion-label position="stacked">Email</ion-label>
+            <ion-input formControlName="email"></ion-input>
+          </ion-item>
+          <div class="validator-error" *ngIf="submitted && f.email.errors">
+            <p *ngIf="f.email.errors.required">Por favor, digite seu email</p>
+          </div>
+        </form>
+        <div class="main-btn">
+          <ion-button margin-top expand="full" (click)="onSubmit()"
+            >Enviar Email
+          </ion-button>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

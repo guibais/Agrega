@@ -1,0 +1,32 @@
+* {
+  color: #fff;
+}
+
+ion-grid {
+  height: 100%;
+  background: url(../../../assets/bg.png);
+  background-size: cover;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  &:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-image: linear-gradient(180deg, #c1c1c17e, rgba(0, 0, 0, 0.88));
+  }
+  &:first-child {
+    padding-top: 5rem;
+  }
+}
+
+.btn-face {
+  --background: linear-gradient(90deg, #32266e, #121b88);
+}
+
+.agrega-img {
+  width: 15rem;
+}

@@ -1,0 +1,39 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Logar-se</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="home" (click)="dismiss()"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="login">
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <form [formGroup]="loginForm" class="main-form">
+          <ion-item>
+            <ion-label position="stacked">Email</ion-label>
+            <ion-input formControlName="email"></ion-input>
+          </ion-item>
+          <div class="validator-error" *ngIf="submitted && f.email.errors">
+            <p *ngIf="f.email.errors.required">Por favor, digite seu email</p>
+          </div>
+          <ion-item>
+            <ion-label position="stacked">Senha</ion-label>
+            <ion-input formControlName="pass" type="password"></ion-input>
+          </ion-item>
+          <div class="validator-error" *ngIf="submitted && f.pass.errors">
+            <p *ngIf="f.pass.errors.required">Por favor, digite sua senha</p>
+          </div>
+          <p><a (click)="openForgot()">Esqueci Minha Senha</a></p>
+        </form>
+        <div class="main-btn">
+          <ion-button margin-top expand="full" (click)="onSubmit()"
+            >Login
+          </ion-button>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

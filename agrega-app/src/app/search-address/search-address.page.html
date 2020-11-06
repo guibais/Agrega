@@ -1,0 +1,28 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-searchbar
+      animated
+      showCancelButton
+      cancelButtonText="Cancelar"
+      placeholder="Procurar Endereço"
+      [(ngModel)]="inputAddress"
+      (ionChange)="searchAddress()"
+      (ionCancel)="Close('')"
+    ></ion-searchbar>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-list>
+    <ion-item
+      text-wrap
+      *ngFor="let address of AddressList"
+      (click)="selectAddress(address)"
+    >
+      <ion-label>
+        <h2>{{ address.structured_formatting.main_text }}</h2>
+        <p text-wrap>{{ address.structured_formatting.secondary_text }}</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>

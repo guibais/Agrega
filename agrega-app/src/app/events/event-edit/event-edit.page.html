@@ -1,0 +1,167 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref=""></ion-back-button>
+    </ion-buttons>
+    <ion-title>Adicionar Evento</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <form [formGroup]="eventEditForm" class="main-form">
+    <ion-item class="ion-activatable" *ngIf="event" (click)="selectImage()">
+      <ion-ripple-effect></ion-ripple-effect>
+      <ion-thumbnail slot="start">
+        <img [src]="imageSrc" *ngIf="imageSrc" />
+        <img [src]="event.imagePath" *ngIf="!imageSrc" />
+      </ion-thumbnail>
+      <ion-label text-wrap>
+        Clique para mudar a imagem
+      </ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked">Titulo</ion-label>
+      <ion-input formControlName="Title"></ion-input>
+    </ion-item>
+    <div class="validator-error" *ngIf="submitted && f.Title.errors">
+      <p *ngIf="f.Title.errors.required">Por favor, digite um título</p>
+      <p *ngIf="f.Title.errors.maxLength">
+        Excedido tamanho máximo de 25 caracteres
+      </p>
+    </div>
+
+    <ion-item>
+      <ion-label position="stacked">SubTítulo</ion-label>
+      <ion-input formControlName="Subtitle"></ion-input>
+    </ion-item>
+    <div class="validator-error" *ngIf="submitted && f.Subtitle.errors">
+      <p *ngIf="f.Subtitle.errors.required">Por favor, digite um subtítulo</p>
+    </div>
+    <ion-item>
+      <ion-label position="stacked">Descrição</ion-label>
+      <ion-textarea formControlName="Description"></ion-textarea>
+    </ion-item>
+    <div class="validator-error" *ngIf="submitted && f.Description.errors">
+      <p *ngIf="f.Description.errors.required">
+        Por favor, digite uma descrição
+      </p>
+    </div>
+    <ion-item>
+      <ion-label position="stacked">Endereço</ion-label>
+      <ion-input
+        (ionFocus)="openSelectAddress()"
+        formControlName="Address"
+      ></ion-input>
+    </ion-item>
+    <div class="validator-error" *ngIf="submitted && f.Address.errors">
+      <p *ngIf="f.Address.errors.required">Por favor, digite o endereço</p>
+    </div>
+    <ion-item>
+      <ion-label position="stacked">Complemento</ion-label>
+      <ion-input formControlName="Complement"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>Category</ion-label>
+      <ion-select
+        [interfaceOptions]="customCategoryOptions"
+        interface="popover"
+        placeholder="Selecione Uma"
+        formControlName="Category"
+      >
+        <ion-select-option value="inovação">Inovação</ion-select-option>
+        <ion-select-option value="palestra">Palestra</ion-select-option>
+        <ion-select-option value="congresso">Congresso</ion-select-option>
+        <ion-select-option value="encontro">Encontro</ion-select-option>
+        <ion-select-option value="workshop">Workshop</ion-select-option>
+        <ion-select-option value="feira">Feira</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <div class="validator-error" *ngIf="submitted && f.Category.errors">
+      <p *ngIf="f.Date.errors.required">Selecione a categoria</p>
+    </div>
+    <ion-item>
+      <ion-label>Data Inicial</ion-label>
+      <ion-datetime
+        display-format="DD MMM, YYYY"
+        picker-format="DD MMM, YYYY"
+        formControlName="Date"
+        [min]="minDate"
+        monthShortNames="jan, fev, mar, abr, mai, jun, jul, ago, set, out, nov, dez"
+        cancelText="Cancelar"
+        doneText="Pronto"
+      ></ion-datetime>
+    </ion-item>
+    <div class="validator-error" *ngIf="submitted && f.Date.errors">
+      <p *ngIf="f.Date.errors.required">Selecione a Data Inicial</p>
+    </div>
+    <ion-item>
+      <ion-label>Data Final</ion-label>
+      <ion-datetime
+        display-format="DD MMM, YYYY"
+        picker-format="DD MMM, YYYY"
+        formControlName="finalDate"
+        [min]="minDate"
+        monthShortNames="jan, fev, mar, abr, mai, jun, jul, ago, set, out, nov, dez"
+        cancelText="Cancelar"
+        doneText="Pronto"
+      ></ion-datetime>
+    </ion-item>
+    <div class="validator-error" *ngIf="submitted && f.finalDate.errors">
+      <p *ngIf="f.Date.errors.required">Selecione a Data Final</p>
+    </div>
+    <ion-item>
+      <ion-label>O Dia Todo</ion-label>
+      <ion-toggle
+        (ionChange)="setToggleTime()"
+        checked="toggleTime"
+      ></ion-toggle>
+    </ion-item>
+    <ion-item *ngIf="!toggleTime">
+      <ion-label>Hora Inicial</ion-label>
+      <ion-datetime
+        display-format="HH:mm"
+        picker-format="HH:mm"
+        formControlName="Time"
+        cancelText="Cancelar"
+        doneText="Pronto"
+      ></ion-datetime>
+    </ion-item>
+    <div class="validator-error" *ngIf="submitted && f.Time.errors">
+      <p *ngIf="f.Date.errors.required">Selecione a Hora Inicial</p>
+    </div>
+
+    <ion-item *ngIf="!toggleTime">
+      <ion-label>Hora Final</ion-label>
+      <ion-datetime
+        display-format="HH:mm"
+        picker-format="HH:mm"
+        formControlName="finalTime"
+        cancelText="Cancelar"
+        doneText="Pronto"
+      ></ion-datetime>
+    </ion-item>
+    <div class="validator-error" *ngIf="submitted && f.finalTime.errors">
+      <p *ngIf="f.Date.errors.required">Selecione a Hora Final</p>
+    </div>
+    <ion-item>
+      <ion-label>Exigir Documento de faculdade</ion-label>
+      <ion-checkbox
+        color="primary"
+        slot="end"
+        formControlName="hasId"
+      ></ion-checkbox>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked">Url do site</ion-label>
+      <ion-input formControlName="Url"></ion-input>
+    </ion-item>
+    <div class="validator-error" *ngIf="submitted && f.Url.errors">
+      <p *ngIf="f.Date.errors.required">Digite o site do evento</p>
+    </div>
+    <div class="main-btn">
+      <ion-button type="submit" expand="full" (click)="onSubmit()"
+        >Salvar</ion-button
+      >
+    </div>
+  </form>
+</ion-content>
